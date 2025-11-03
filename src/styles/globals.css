@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navigation-height: 5.625rem;
+  }
+
+  html {
+    @apply h-full antialiased;
+  }
+
+  body {
+    @apply min-h-full bg-neutral-300;
+  }
+}

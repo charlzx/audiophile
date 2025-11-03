@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Home",
+    "href": "/"
+  },
+  {
+    "name": "Headphones",
+    "href": "/products/headphones"
+  },
+  {
+    "name": "Speakers",
+    "href": "/products/speakers"
+  },
+  {
+    "name": "Earphones",
+    "href": "/products/earphones"
+  }
+]

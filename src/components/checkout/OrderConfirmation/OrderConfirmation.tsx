@@ -11,9 +11,10 @@ interface OrderConfirmationProps {
   cart: CartProduct[]
   grandTotal: number
   onClose: () => void
+  onViewOrder: () => void
 }
 
-export function OrderConfirmation({ cart, grandTotal, onClose }: OrderConfirmationProps) {
+export function OrderConfirmation({ cart, grandTotal, onClose, onViewOrder }: OrderConfirmationProps) {
   const firstItem = cart[0]
   const otherItemsCount = cart.length - 1
 
@@ -104,14 +105,24 @@ export function OrderConfirmation({ cart, grandTotal, onClose }: OrderConfirmati
             </div>
           </div>
 
-          <Button
-            className="w-full"
-            intent="primary"
-            fullWidth
-            onClick={onClose}
-          >
-            Back to home
-          </Button>
+          <div className="flex flex-col gap-3 md:flex-row md:gap-4">
+            <Button
+              className="flex-1"
+              intent="secondary"
+              fullWidth
+              onClick={onClose}
+            >
+              Back to home
+            </Button>
+            <Button
+              className="flex-1"
+              intent="primary"
+              fullWidth
+              onClick={onViewOrder}
+            >
+              View order details
+            </Button>
+          </div>
         </div>
       </div>
     </>

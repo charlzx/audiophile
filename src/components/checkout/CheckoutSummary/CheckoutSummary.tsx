@@ -12,6 +12,7 @@ interface CheckoutSummaryProps {
   grandTotal: number
   formId: string
   paymentMethod: string
+  isSubmitting?: boolean
 }
 
 export function CheckoutSummary({ 
@@ -21,7 +22,8 @@ export function CheckoutSummary({
   vatAmount,
   grandTotal,
   formId,
-  paymentMethod 
+  paymentMethod,
+  isSubmitting = false
 }: CheckoutSummaryProps) {
   return (
     <div className="w-full overflow-hidden rounded-lg bg-neutral-100 p-[1.5rem] lg:p-[2rem] xl:basis-1/3">
@@ -74,8 +76,14 @@ export function CheckoutSummary({
         className="mt-[2rem]"
         fullWidth
         form={formId}
+        disabled={isSubmitting}
       >
-        {paymentMethod === 'Cash on Delivery' ? 'Continue' : 'Continue & Pay'}
+        {isSubmitting 
+          ? 'Processing...' 
+          : paymentMethod === 'Cash on Delivery' 
+            ? 'Continue' 
+            : 'Continue & Pay'
+        }
       </SubmitButton>
     </div>
   )

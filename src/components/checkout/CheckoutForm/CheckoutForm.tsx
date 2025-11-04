@@ -10,9 +10,10 @@ import { useEffect } from 'react'
 interface CheckoutFormProps {
   onSubmit: (data: CheckoutFormData) => void
   onPaymentMethodChange: (method: string) => void
+  disabled?: boolean
 }
 
-export function CheckoutForm({ onSubmit, onPaymentMethodChange }: CheckoutFormProps) {
+export function CheckoutForm({ onSubmit, onPaymentMethodChange, disabled = false }: CheckoutFormProps) {
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ export function CheckoutForm({ onSubmit, onPaymentMethodChange }: CheckoutFormPr
       </h1>
 
       <form id="checkout-form" onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <fieldset disabled={disabled} className="space-y-8">
         <section>
           <h2 className="text-xs font-bold uppercase text-orange">Billing Details</h2>
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -156,6 +158,7 @@ export function CheckoutForm({ onSubmit, onPaymentMethodChange }: CheckoutFormPr
             )}
           </div>
         </section>
+        </fieldset>
       </form>
     </div>
   )

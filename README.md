@@ -137,24 +137,6 @@ Professional HTML email includes:
 - "View Your Order" CTA link
 - Support contact information
 
-## Stage 3 Requirements Checklist
-
-- [x] React/Next.js implementation
-- [x] Pixel-perfect responsive design (mobile, tablet, desktop)
-- [x] Checkout form with validation
-- [x] Field-level error messages
-- [x] Edge case handling (invalid inputs, empty cart, etc.)
-- [x] Convex backend integration
-- [x] Order storage with all required fields
-- [x] Confirmation email via Resend
-- [x] HTML email template (responsive & branded)
-- [x] Order confirmation page
-- [x] Order ID generation and display
-- [x] Accessibility (ARIA labels, semantic HTML, screen reader support)
-- [x] Loading states and duplicate submission prevention
-- [x] Error handling with user-friendly messages
-- [x] Code quality (modular, typed, documented)
-
 ## Development
 
 ```bash
@@ -184,16 +166,5 @@ npm run lint
 6. Check email inbox for confirmation
 7. Click "View Your Order" or visit `/order/[orderId]`
 
-## Support
-
-For issues or questions:
-- Email: charlesobuzor@outlook.com
-- GitHub Issues: [Create an issue](repository-url/issues)
-
-## License
-
-This project is part of Stage 3 coursework.
 
 ---
-
-Built with ❤️ using Next.js, Convex, and Resend

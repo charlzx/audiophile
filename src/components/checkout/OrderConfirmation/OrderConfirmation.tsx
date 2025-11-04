@@ -5,6 +5,8 @@ import { CartProduct } from '@/types'
 import { CheckoutFormData } from '../CheckoutForm/schema'
 import { getFormattedPrice, getShortenedProductName } from '@/utils/cart'
 import OrderConfirmationIcon from '@/assets/checkout/icon-order-confirmation.svg'
+import { motion } from 'framer-motion'
+import { backdropVariants, modalVariants } from '@/utils/animations'
 
 interface OrderConfirmationProps {
   orderData: CheckoutFormData
@@ -45,9 +47,20 @@ export function OrderConfirmation({ cart, grandTotal, onClose, onViewOrder }: Or
 
   return (
     <>
-      <div className="fixed inset-0 z-[5] bg-neutral-900/40" onClick={onClose} />
+      <motion.div
+        variants={backdropVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="fixed inset-0 z-[5] bg-neutral-900/40"
+        onClick={onClose}
+      />
       <div className="fixed inset-0 z-[6] flex items-center justify-center p-8">
-        <div 
+        <motion.div
+          variants={modalVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           onClick={(e) => e.stopPropagation()}
           className="w-full lg:w-[40rem] rounded-lg bg-neutral-100 p-8 md:p-12"
         >
@@ -123,7 +136,7 @@ export function OrderConfirmation({ cart, grandTotal, onClose, onViewOrder }: Or
               View order details
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </>
   )

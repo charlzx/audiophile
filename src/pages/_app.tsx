@@ -4,6 +4,9 @@ import type { AppProps } from "next/app";
 import { Manrope } from "next/font/google";
 import Head from "next/head";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
+import { pageVariants } from "@/utils/animations";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -13,6 +16,8 @@ const manrope = Manrope({
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -27,7 +32,17 @@ export default function App({ Component, pageProps }: AppProps) {
       <ConvexProvider client={convex}>
         <div className={manrope.className}>
           <Layout>
-            <Component {...pageProps} />
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={router.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Component {...pageProps} />
+              </motion.div>
+            </AnimatePresence>
           </Layout>
         </div>
       </ConvexProvider>

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { twJoin } from "tailwind-merge";
+import { motion, AnimatePresence } from "framer-motion";
 
 type ProductProps = {
   product: ProductType;
@@ -86,6 +87,7 @@ export default function Product({
   showAddToCart,
 }: ProductProps) {
   const [productQuantity, setProductQuantity] = useState(1);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
   const pathname = usePathname();
   const dynamicRoute = useRouter().asPath;
   const productPriceFormatted = product.price.toLocaleString("en-US");
@@ -111,6 +113,12 @@ export default function Product({
 
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     setProductQuantity(1);
+    setShowAddedMessage(true);
+    
+    // Hide message after 3 seconds
+    setTimeout(() => {
+      setShowAddedMessage(false);
+    }, 3000);
   };
 
   const handleChangeQuantity = (value: number) => {
@@ -166,25 +174,54 @@ export default function Product({
             <p className="mt-[1.5rem] text-lg text-neutral-900 md:mt-[2rem]">
               $ {productPriceFormatted}
             </p>
-            <div className="mt-[1.94rem] flex flex-row flex-wrap items-center gap-[1rem] lg:mt-[2.94rem]">
-              <div className="flex h-[3rem] w-[7.5rem] items-center justify-between bg-neutral-400 text-[0.8125rem] font-bold">
-                <button
-                  className="h-full basis-1/3 text-[1rem] text-neutral-900/25 transition duration-300 ease-in-out hover:text-orange"
-                  onClick={() => handleChangeQuantity(-1)}
-                >
-                  -
-                </button>
-                <span className="text-neutral-900">{productQuantity}</span>
-                <button
-                  className="h-full basis-1/3 text-[1rem] text-neutral-900/25 transition duration-300 ease-in-out hover:text-orange"
-                  onClick={() => handleChangeQuantity(+1)}
-                >
-                  +
-                </button>
+            <div className="mt-[1.94rem] lg:mt-[2.94rem]">
+              <div className="flex flex-row flex-wrap items-center gap-[1rem]">
+                <div className="flex h-[3rem] w-[7.5rem] items-center justify-between bg-neutral-400 text-[0.8125rem] font-bold">
+                  <button
+                    className="h-full basis-1/3 text-[1rem] text-neutral-900/25 transition duration-300 ease-in-out hover:text-orange"
+                    onClick={() => handleChangeQuantity(-1)}
+                  >
+                    -
+                  </button>
+                  <span className="text-neutral-900">{productQuantity}</span>
+                  <button
+                    className="h-full basis-1/3 text-[1rem] text-neutral-900/25 transition duration-300 ease-in-out hover:text-orange"
+                    onClick={() => handleChangeQuantity(+1)}
+                  >
+                    +
+                  </button>
+                </div>
+                <Button onClick={handleAddToCart} intent="primary" className="">
+                  Add to cart
+                </Button>
               </div>
-              <Button onClick={handleAddToCart} intent="primary" className="">
-                Add to cart
-              </Button>
+              
+              <AnimatePresence>
+                {showAddedMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-3 flex items-center gap-2 font-medium text-green-600"
+                  >
+                    <svg 
+                      className="h-5 w-5" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M5 13l4 4L19 7" 
+                      />
+                    </svg>
+                    <span>Added {productQuantity === 1 ? 'item' : 'items'} to cart</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </>
         ) : (

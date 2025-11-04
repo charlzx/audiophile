@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
 import Button from "../Button/Button";
 import Container from "../Container";
+import { motion, AnimatePresence } from "framer-motion";
+import { backdropVariants, modalVariants } from "@/utils/animations";
 
 type CartProps = {
   isCartOpen: boolean;
@@ -144,25 +146,33 @@ export default function Cart({
     };
   }, [setIsCartOpen]);
 
-  if (!isCartOpen) {
-    return null;
-  }
-
   return (
-    <div
-      onClick={handleClickOutside}
-      className={twJoin(
-        "fixed bottom-0 left-0 z-[5] h-[calc(100%-var(--navigation-height))] w-full",
-        className,
-      )}
-    >
-      <div className="fixed bottom-0 left-0 h-[calc(100%-var(--navigation-height))] w-full bg-neutral-900/40"></div>
-      <div className="fixed top-[calc(2rem+var(--navigation-height))] w-full">
-        <Container>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-full overflow-hidden rounded-lg bg-neutral-100 p-[2rem] lg:ml-auto lg:w-fit"
-          >
+    <AnimatePresence>
+      {isCartOpen && (
+        <div
+          onClick={handleClickOutside}
+          className={twJoin(
+            "fixed bottom-0 left-0 z-[5] h-[calc(100%-var(--navigation-height))] w-full",
+            className,
+          )}
+        >
+          <motion.div
+            variants={backdropVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="fixed bottom-0 left-0 h-[calc(100%-var(--navigation-height))] w-full bg-neutral-900/40"
+          ></motion.div>
+          <div className="fixed top-[calc(2rem+var(--navigation-height))] w-full">
+            <Container>
+              <motion.div
+                variants={modalVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full overflow-hidden rounded-lg bg-neutral-100 p-[2rem] lg:ml-auto lg:w-fit"
+              >
             <div className="flex justify-between gap-1">
               <p className="text-lg font-bold uppercase text-neutral-900">
                 Cart ({cart.length})
@@ -255,9 +265,11 @@ export default function Cart({
             >
               {cart.length === 0 ? "Continue shopping" : "Checkout"}
             </Button>
-          </div>
+          </motion.div>
         </Container>
       </div>
     </div>
+      )}
+    </AnimatePresence>
   );
 }

@@ -1,6 +1,7 @@
 import Button from "@/components/common/Button/Button";
 import ArrowRightIcon from "@/components/common/icons/ArrowRightIcon";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type CategoryProps = {
   name: string;
@@ -16,7 +17,10 @@ export default function Category({
   onClick,
 }: CategoryProps) {
   return (
-    <li className="relative flex w-full flex-col items-center justify-center rounded-lg bg-neutral-400 px-4 py-6 lg:py-7">
+    <motion.li
+      className="relative flex w-full flex-col items-center justify-center rounded-lg bg-neutral-400 px-4 py-6 lg:py-7"
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+    >
       <div className="flex w-full flex-col items-center justify-center">
         <Image
           className="absolute top-[-26%] h-[9rem] w-auto xl:h-[10rem]"
@@ -38,6 +42,6 @@ export default function Category({
           <ArrowRightIcon />
         </Button>
       </div>
-    </li>
+    </motion.li>
   );
 }

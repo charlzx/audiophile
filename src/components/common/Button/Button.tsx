@@ -1,16 +1,15 @@
 import { cva, VariantProps } from "cva";
 import Link, { LinkProps } from "next/link";
-import { AnchorHTMLAttributes, FC, HTMLAttributes, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 
-type ButtonHTMLProps = Omit<HTMLAttributes<HTMLButtonElement>, "type">;
-type AnchorHTMLProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href">;
 type ButtonProps = VariantProps<typeof buttonVariants> & {
   href?: string;
   onClick?: () => void;
   children: ReactNode;
   className?: string;
-} & (ButtonHTMLProps | AnchorHTMLProps);
+};
 
 const buttonVariants = cva(
   [
@@ -82,7 +81,6 @@ const Button: FC<ButtonProps> = ({
   disabled,
   onClick,
   className,
-  ...restProps
 }) => {
   const buttonClasses = twMerge(
     buttonVariants({ intent, fullWidth, disabled }),
@@ -92,25 +90,34 @@ const Button: FC<ButtonProps> = ({
   if (href) {
     return (
       <Link
-        {...(restProps as LinkProps)}
         onClick={onClick}
         className={buttonClasses}
         href={href}
       >
-        {children}
+        <motion.span
+          className="inline-block"
+          whileHover={!disabled ? { scale: 1.02 } : undefined}
+          whileTap={!disabled ? { scale: 0.98 } : undefined}
+          transition={{ duration: 0.2 }}
+        >
+          {children}
+        </motion.span>
       </Link>
     );
   }
 
   return (
-    <button
-      {...(restProps as ButtonHTMLProps)}
+    <motion.button
       type="button"
       onClick={onClick}
       className={buttonClasses}
+      whileHover={!disabled ? { scale: 1.02 } : undefined}
+      whileTap={!disabled ? { scale: 0.98 } : undefined}
+      transition={{ duration: 0.2 }}
+      disabled={disabled || undefined}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 

@@ -87,6 +87,12 @@ const Button: FC<ButtonProps> = ({
     className,
   );
 
+  const motionChildClasses = twMerge(
+    intent === "simple"
+      ? "inline-flex items-center justify-center gap-[0.83rem]"
+      : "inline-block",
+  );
+
   if (href) {
     return (
       <Link
@@ -95,7 +101,7 @@ const Button: FC<ButtonProps> = ({
         href={href}
       >
         <motion.span
-          className="inline-block"
+          className={motionChildClasses}
           whileHover={!disabled ? { scale: 1.02 } : undefined}
           whileTap={!disabled ? { scale: 0.98 } : undefined}
           transition={{ duration: 0.2 }}
